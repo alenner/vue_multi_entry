@@ -17,4 +17,26 @@ You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/
 
 ## 这是一个H5端的多入口应用项目（试验阶段）
 
+### 开启本地web服务调试
 
+`yarn run dev`
+
+### 打包生产环境项目
+
+`yarn run build`
+
+### 预览打包项目
+
+`yarn run preview`
+
+### 项目目录结构说明
+
+- build 项目打包的指定目录
+- public 公共资源目录
+- src 项目主目录
+    - base 基础公共资源
+        - components 公共组件
+        - style 公共样式配置
+        - utils 公共js库
+        - layout 页面基本布局
+        - config.ts 业务模块配置整合

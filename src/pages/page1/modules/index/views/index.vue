@@ -12,8 +12,6 @@
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-
-console.log(process.env, 'console.log(process.env) ')
 const JumpTo = () => {
   // router.push({ name: 'home' })
   window.location.href = window.location.origin

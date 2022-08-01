@@ -4,7 +4,6 @@ import vue from '@vitejs/plugin-vue'
 /* 引用postcss-px-to-viewport */
 import postCssPxToViewport from 'postcss-px-to-viewport'
 import PxToViewportConfig from './postcssrc.js'
-
 /* 服务环境配置 */
 
 // https://vitejs.dev/config/
@@ -20,13 +19,17 @@ export default defineConfig(({ mode }: ConfigEnv) => {
         "@": resolve(__dirname, './src')
       }
     },
+    /**
+     * 定义全局数据对象
+     * 主要用于存放环境变量相关配置，可在项目中任意位置通过define的属性访问: 比如：process.env
+     */
     define: {
       "process.env": env
     },
     css: {
       postcss: {
         plugins: [
-          postCssPxToViewport(PxToViewportConfig) // H5端响应式单位配置
+          postCssPxToViewport(PxToViewportConfig) // H5端响应式单位配置方案
         ]
       }
     },

@@ -19,7 +19,7 @@ You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/
 
 ### 开启本地web服务调试
 
-`yarn run dev -- --open /pages/${entry}/` // entry 为入口名称
+`yarn run dev -- --open /${entry}` // entry 为入口名称
 
 ### 打包生产环境项目
 
@@ -45,6 +45,7 @@ src -- 源码目录
 │  ├─ api -- 全局api
 │  ├─ assets -- 静态（scss及主题）资源文件
 │  ├─ components -- 通用组件封装
+│  ├─ styles -- 通用主题、样式、scss变量和mixin
 │  ├─ layout -- 通用布局封装 
 │  ├─ utils -- 工具类
 │  └─ config.js  -- 项目模块统合文件

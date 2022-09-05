@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue'
 import postCssPxToViewport from 'postcss-px-to-viewport'
 import PxToViewportConfig from './postcssrc.js'
 /* 服务环境配置 */
-
+import serverPageProxy from './serverPageProxy.config.js'
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }: ConfigEnv) => {
   /* 根据mode模式读取相应的env文件配置 */
@@ -120,16 +120,8 @@ export default defineConfig(({ mode }: ConfigEnv) => {
           changeOrigin: true, // 开启跨域访问
           rewrite: (path) => path.replace('^/api', '/') // 请求路径重写
         },
-        // page1应用代理设置
-        [openUrl]: {
-          target: 'http://localhost',
-          // 解决单页面html文件路径不为'/index.html'时，启用history路由刷新页面404问题
-          bypass: (req, res, options) => {
-            if (req.headers.accept.indexOf('html') !== -1) {
-              return `/pages${openUrl}/index.html`;
-            }
-          }
-        }
+        // 多应用代理设置
+        ...serverPageProxy
       },
       open: openUrl
     }

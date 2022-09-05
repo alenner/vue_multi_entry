@@ -19,7 +19,7 @@ You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/
 
 ### 开启本地web服务调试
 
-`yarn run dev`
+`yarn run dev -- --open /pages/${entry}/` // entry 为入口名称
 
 ### 打包生产环境项目
 
@@ -30,13 +30,41 @@ You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/
 `yarn run preview`
 
 ### 项目目录结构说明
+```
+build -- 项目打包的指定目录
+public -- 公共资源目录
+pages -- 多入口HTML文件目录
+├─ main -- 主入口 （命名不固定）
+│  ├─ index.html
+├─ sub -- 子入口 （命名不固定）
+│  ├─ index.html
+└─ xxx 等等
 
-- build 项目打包的指定目录
-- public 公共资源目录
-- src 项目主目录
-    - base 基础公共资源
-        - components 公共组件
-        - style 公共样式配置
-        - utils 公共js库
-        - layout 页面基本布局
-        - config.ts 业务模块配置整合
+src -- 源码目录
+├─ base/common -- 通用
+│  ├─ api -- 全局api
+│  ├─ assets -- 静态（scss及主题）资源文件
+│  ├─ components -- 通用组件封装
+│  ├─ layout -- 通用布局封装 
+│  ├─ utils -- 工具类
+│  └─ config.js  -- 项目模块统合文件
+├─ pages  --  项目入口目录
+│  ├─ main --  main应用
+│  │  ├─ modules -- 业务模块目录
+│  │  │  ├─ home -- 首页
+│  │  │  │  ├─ api -- 模块的api
+│  │  │  │  ├─ assets -- 模块的静态资源
+│  │  │  │  ├─ components -- 模块的组件
+│  │  │  │  ├─ router --  模块的路由
+│  │  │  │  ├─ store  --  模块的vuex
+│  │  │  │  ├─ views  --  模块vue文件
+│  │  │  │  └─ config.js  --  模块的导出文件
+│  │  │  ├─ login -- 登录
+│  │  │  ├─ xxx -- xxx业务模块
+│  │  ├─ router -- vue-router路由配置
+│  │  │  ├─ index.ts
+│  │  │  └─ guard.ts -- 路由守卫
+│  │  ├─ App.vue -- 应用根组件
+│  │  ├─ config.ts  -- 业务模块统合文件
+└─ └─ └─ main.ts -- 入口文件
+``` 

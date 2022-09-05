@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import '@/base/style/reset.scss'
+import '@/base/styles/reset.scss'
 import App from './App.vue'
 
 import router from './router'

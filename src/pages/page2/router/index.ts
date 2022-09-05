@@ -1,6 +1,5 @@
-/* 路由实例创建和挂载 */
 import { createRouter, createWebHistory } from 'vue-router'
-import { ModuleRoutes } from '@/base/config'
+import { ModuleRoutes } from '../config'
 
 const router = createRouter({
   history: createWebHistory(),

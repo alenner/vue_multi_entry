@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="header">
-      <p class="title">首页</p>
+      <p class="title">page2</p>
     </div>
 
-    <div class="button" @click="JumpTo">跳转到page1</div>
+    <div class="button" @click="JumpTo">跳转到外部单页面应用Page1</div>
   </div>
 </template>
 
@@ -12,10 +12,9 @@
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-
 const JumpTo = () => {
-  // router.push({ name: 'page1' }) // 无法跳转到其他入口页面
-  window.location.href = window.location.origin + '/page1.html'
+  // router.push({ name: 'home' })
+  window.location.href = window.location.origin + '/page1'
 }
 </script>
 
@@ -43,5 +42,9 @@ const JumpTo = () => {
   background-color: blue;
   color: #FFF;
   font-size: 12px;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 </style>

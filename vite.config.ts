@@ -10,6 +10,10 @@ import PxToViewportConfig from './postcssrc.js'
 export default defineConfig(({ mode }: ConfigEnv) => {
   /* 根据mode模式读取相应的env文件配置 */
   const env = loadEnv(mode, process.cwd())
+
+  //获取命令行参数信息
+  const argvIndex = process.argv.findIndex(key => key === '--open') // 获取命令行带 '--open' 标识下标
+  const openUrl = argvIndex > -1 ? process.argv[argvIndex + 1] : '/page1'
   return {
     /* 插件激活 */
     plugins: [vue()],
@@ -31,6 +35,11 @@ export default defineConfig(({ mode }: ConfigEnv) => {
         plugins: [
           postCssPxToViewport(PxToViewportConfig) // H5端响应式单位配置方案
         ]
+      },
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@import '@/base/styles/global.scss';` // 项目全局共享scss变量和mixin混入
+        }
       }
     },
     /* 打包配置 */
@@ -43,8 +52,8 @@ export default defineConfig(({ mode }: ConfigEnv) => {
       minify: 'esbuild', // 混淆器，terser构建后⽂件体积更⼩
       rollupOptions: {
         input: {
-          main: resolve(__dirname, 'index.html'),
-          page1: resolve(__dirname, 'page1.html')
+          page1: resolve(__dirname, 'pages/page1/index.html'),
+          page2: resolve(__dirname, 'pages/page2/index.html')
         },
         output: {
           manualChunks(id) {
@@ -73,9 +82,30 @@ export default defineConfig(({ mode }: ConfigEnv) => {
             }
           },
           /* 打包文件整理 */
-          chunkFileNames: 'static/js/[name]-[hash].js',
-          entryFileNames: 'static/entry/[name]-[hash].js',
-          assetFileNames: 'static/[ext]/[name]-[hash].[ext]'
+          // 代码块整理
+          chunkFileNames: (chunkInfo)=>{
+            if(chunkInfo.facadeModuleId&&chunkInfo.facadeModuleId.includes('src')){
+              const module_name=chunkInfo.facadeModuleId.match(/src\/pages\/(.+?)\//)[1]
+              return `pages/${module_name}/static/js/[name]-[hash].js`
+            }
+            return 'common/static/js/[name]-[hash].js'
+          },
+          // 入口文件整理
+          entryFileNames:(chunkInfo)=>{
+            if(chunkInfo.facadeModuleId){
+              const module_name=chunkInfo.facadeModuleId.match(/\/pages\/(.+?)\//)[1]
+              return `pages/${module_name}/static/entry/[name]-[hash].js`
+            }
+            return 'common/static/entry/[name]-[hash].js'
+          }, 
+          // 静态资源整理
+          assetFileNames: (chunkInfo)=>{
+            if(chunkInfo.name&&chunkInfo.name.includes('pages')){
+              const module_name=chunkInfo.name.match(/pages\/(.+?)\//)[1]
+              return `pages/${module_name}/static/[ext]/[name]-[hash].[ext]`
+            }
+            return 'common/static/[ext]/[name]-[hash].[ext]'
+          }
         }
       },
 
@@ -89,8 +119,19 @@ export default defineConfig(({ mode }: ConfigEnv) => {
           ws: true, // 开启websocket代理
           changeOrigin: true, // 开启跨域访问
           rewrite: (path) => path.replace('^/api', '/') // 请求路径重写
+        },
+        // page1应用代理设置
+        [openUrl]: {
+          target: 'http://localhost',
+          // 解决单页面html文件路径不为'/index.html'时，启用history路由刷新页面404问题
+          bypass: (req, res, options) => {
+            if (req.headers.accept.indexOf('html') !== -1) {
+              return `/pages${openUrl}/index.html`;
+            }
+          }
         }
-      }
+      },
+      open: openUrl
     }
   }
 })

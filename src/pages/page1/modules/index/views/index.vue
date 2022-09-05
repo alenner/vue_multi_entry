@@ -1,11 +1,13 @@
 <template>
   <div>
     <div class="header">
-      <p class="title">page1</p>
+      <p class="title">page1_index</p>
     </div>
 
-    <div class="button" @click="JumpTo">跳转到首页</div>
+    <div class="button" @click="JumpTo">跳转到外部单页面应用Page2</div>
+    <div class="button" @click="Login">登录</div>
   </div>
+  
 </template>
 
 <script setup lang="ts">
@@ -14,14 +16,17 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const JumpTo = () => {
   // router.push({ name: 'home' })
-  window.location.href = window.location.origin
+  window.location.href = window.location.origin + '/page2'
+}
+const Login = () => {
+  router.push({ name: 'Login' })
 }
 </script>
 
 <style lang="scss" scoped>
 .header {
   height: 50px;
-  border-bottom: 1px solid #ccc;
+  background-color: $color-primary;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,18 +34,19 @@ const JumpTo = () => {
   .title {
     font-size: 16px;
     font-weight: bold;
-    color: red;
+    color: #fff;
   }
 }
 
 .button {
+  margin-top: 20px;
   border-radius: 3px;
   padding: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: blue;
-  color: #FFF;
+  background-color: $color-primary;
+  color: $color-text-regular;
   font-size: 12px;
 
   &:hover {

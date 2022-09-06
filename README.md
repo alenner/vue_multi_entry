@@ -93,6 +93,7 @@ build -- 项目打包的指定目录
 │  │  │  ├─ entry -- 入口文件
 │  │  │  ├─ js
 │  │  │  └─ assets -- 资源目录
+│  └─ └─ index.html
 └─ public目录的一些文件
 ``` 
 1. 需先在项目根目录下创建与build目录相对应的html文件目录，如图：
@@ -149,15 +150,15 @@ build -- 项目打包的指定目录
      * 其中${key} 为应用入口名称（与'/apps'目录下的文件夹名称对应）
     */ 
     porxy: {
-        [`/${key}`]: {
-            target: 'http://localhost',
-            // 解决单页面html文件路径不为'/index.html'时，启用history路由刷新页面404问题
-            bypass: (req, res, options) => {
-                // 当请求的文件类型为html的时候，执行重定向
-                if (req.headers.accept.indexOf('html') !== -1) {
-                    return `/apps/${key}/index.html`;
-                }
-            }
-        }
+      [`/${key}`]: {
+          target: 'http://localhost',
+          // 解决单页面html文件路径不为'/index.html'时，启用history路由刷新页面404问题
+          bypass: (req, res, options) => {
+              // 当请求的文件类型为html的时候，执行重定向
+              if (req.headers.accept.indexOf('html') !== -1) {
+                  return `/apps/${key}/index.html`;
+              }
+          }
+      }
     }
 ```

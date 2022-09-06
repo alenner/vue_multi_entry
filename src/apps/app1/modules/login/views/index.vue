@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="header">
-      <p class="title">page1_login</p>
+      <p class="title">app1_login</p>
     </div>
   </div>
 </template>

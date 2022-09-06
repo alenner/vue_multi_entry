@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue'
 import postCssPxToViewport from 'postcss-px-to-viewport'
 import PxToViewportConfig from './postcssrc.js'
 /* 服务环境配置 */
-import serverPageProxy from './serverPageProxy.config.js'
+import serverPageProxy from './serverPageProxy.config'
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }: ConfigEnv) => {
   /* 根据mode模式读取相应的env文件配置 */
@@ -13,7 +13,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
 
   //获取命令行参数信息
   const argvIndex = process.argv.findIndex(key => key === '--open') // 获取命令行带 '--open' 标识下标
-  const openUrl = argvIndex > -1 ? process.argv[argvIndex + 1] : '/page1'
+  const openUrl = argvIndex > -1 ? process.argv[argvIndex + 1] : '/app1'
   return {
     /* 插件激活 */
     plugins: [vue()],
@@ -52,8 +52,8 @@ export default defineConfig(({ mode }: ConfigEnv) => {
       minify: 'esbuild', // 混淆器，terser构建后⽂件体积更⼩
       rollupOptions: {
         input: {
-          page1: resolve(__dirname, 'pages/page1/index.html'),
-          page2: resolve(__dirname, 'pages/page2/index.html')
+          app1: resolve(__dirname, 'app/app1/index.html'),
+          app2: resolve(__dirname, 'apps/app2/index.html')
         },
         output: {
           manualChunks(id) {
@@ -85,24 +85,24 @@ export default defineConfig(({ mode }: ConfigEnv) => {
           // 代码块整理
           chunkFileNames: (chunkInfo)=>{
             if(chunkInfo.facadeModuleId&&chunkInfo.facadeModuleId.includes('src')){
-              const module_name=chunkInfo.facadeModuleId.match(/src\/pages\/(.+?)\//)[1]
-              return `pages/${module_name}/static/js/[name]-[hash].js`
+              const module_name=chunkInfo.facadeModuleId.match(/src\/apps\/(.+?)\//)[1]
+              return `apps/${module_name}/static/js/[name]-[hash].js`
             }
             return 'common/static/js/[name]-[hash].js'
           },
           // 入口文件整理
           entryFileNames:(chunkInfo)=>{
             if(chunkInfo.facadeModuleId){
-              const module_name=chunkInfo.facadeModuleId.match(/\/pages\/(.+?)\//)[1]
-              return `pages/${module_name}/static/entry/[name]-[hash].js`
+              const module_name=chunkInfo.facadeModuleId.match(/\/apps\/(.+?)\//)[1]
+              return `apps/${module_name}/static/entry/[name]-[hash].js`
             }
             return 'common/static/entry/[name]-[hash].js'
           }, 
           // 静态资源整理
           assetFileNames: (chunkInfo)=>{
-            if(chunkInfo.name&&chunkInfo.name.includes('pages')){
-              const module_name=chunkInfo.name.match(/pages\/(.+?)\//)[1]
-              return `pages/${module_name}/static/[ext]/[name]-[hash].[ext]`
+            if(chunkInfo.name&&chunkInfo.name.includes('apps')){
+              const module_name=chunkInfo.name.match(/apps\/(.+?)\//)[1]
+              return `apps/${module_name}/static/[ext]/[name]-[hash].[ext]`
             }
             return 'common/static/[ext]/[name]-[hash].[ext]'
           }

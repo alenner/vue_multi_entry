@@ -52,7 +52,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
       minify: 'esbuild', // 混淆器，terser构建后⽂件体积更⼩
       rollupOptions: {
         input: {
-          app1: resolve(__dirname, 'app/app1/index.html'),
+          app1: resolve(__dirname, 'apps/app1/index.html'),
           app2: resolve(__dirname, 'apps/app2/index.html')
         },
         output: {

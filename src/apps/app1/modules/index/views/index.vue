@@ -35,6 +35,7 @@ const Login = () => {
     font-size: 16px;
     font-weight: bold;
     color: #fff;
+    @include no-wrap();
   }
 }
 

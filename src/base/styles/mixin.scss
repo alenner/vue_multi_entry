@@ -1,1 +1,18 @@
 /* 通用mixin */
+
+// 文本单行省略样式
+@mixin no-wrap() {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+// 文本多行省略样式
+@mixin multi-ellipsis($line:2){
+    overflow : hidden;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: $line;
+    -webkit-box-orient: vertical;
+}

@@ -11,7 +11,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
   /* 根据mode模式读取相应的env文件配置 */
   const env = loadEnv(mode, process.cwd())
 
-  //获取命令行参数信息
+  // 获取命令行参数信息
   const argvIndex = process.argv.findIndex(key => key === '--open') // 获取命令行带 '--open' 标识下标
   const openUrl = argvIndex > -1 ? process.argv[argvIndex + 1] : '/app1'
   return {
@@ -20,7 +20,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
     /* 路径重写 */
     resolve: {
       alias: {
-        "@": resolve(__dirname, './src')
+        '@': resolve(__dirname, './src')
       }
     },
     /**
@@ -28,7 +28,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
      * 主要用于存放环境变量相关配置，可在项目中任意位置通过define的属性访问: 比如：process.env
      */
     define: {
-      "process.env": env
+      'process.env': env
     },
     css: {
       postcss: {
@@ -38,14 +38,14 @@ export default defineConfig(({ mode }: ConfigEnv) => {
       },
       preprocessorOptions: {
         scss: {
-          additionalData: `@import '@/base/styles/global.scss';` // 项目全局共享scss变量和mixin混入
+          additionalData: '@import \'@/base/styles/global.scss\';' // 项目全局共享scss变量和mixin混入
         }
       }
     },
     /* 打包配置 */
     build: {
       sourcemap: env.VITE_APP_NODE_ENV === 'development',
-      outDir: 'build', //指定输出路径
+      outDir: 'build', // 指定输出路径
       assetsDir: 'static', // 指定⽣成静态资源的存放路径
       brotliSize: false, // 不统计
       target: 'esnext',
@@ -56,7 +56,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
           app2: resolve(__dirname, 'apps/app2/index.html')
         },
         output: {
-          manualChunks(id) {
+          manualChunks (id) {
             if (id.includes('node_modules')) {
               const arr = id.toString().split('node_modules/')[1].split('/')
               switch (arr[0]) {
@@ -71,43 +71,43 @@ export default defineConfig(({ mode }: ConfigEnv) => {
                 // case 'echarts':
                 case 'lodash':
                 case 'pinia':
-                  // case 'element-plus':
+                case 'vant':
                   return '_' + arr[0]
-                  break;
+                  break
                 // 一些比较小的第三方库可以整合到一个文件当中
                 default:
                   return '__vendor'
-                  break;
+                  break
               }
             }
           },
           /* 打包文件整理 */
           // 代码块整理
-          chunkFileNames: (chunkInfo)=>{
-            if(chunkInfo.facadeModuleId&&chunkInfo.facadeModuleId.includes('src')){
-              const module_name=chunkInfo.facadeModuleId.match(/src\/apps\/(.+?)\//)[1]
+          chunkFileNames: (chunkInfo) => {
+            if (chunkInfo.facadeModuleId && chunkInfo.facadeModuleId.includes('src')) {
+              const module_name = chunkInfo.facadeModuleId.match(/src\/apps\/(.+?)\//)[1]
               return `apps/${module_name}/static/js/[name]-[hash].js`
             }
             return 'common/static/js/[name]-[hash].js'
           },
           // 入口文件整理
-          entryFileNames:(chunkInfo)=>{
-            if(chunkInfo.facadeModuleId){
-              const module_name=chunkInfo.facadeModuleId.match(/\/apps\/(.+?)\//)[1]
+          entryFileNames: (chunkInfo) => {
+            if (chunkInfo.facadeModuleId) {
+              const module_name = chunkInfo.facadeModuleId.match(/\/apps\/(.+?)\//)[1]
               return `apps/${module_name}/static/entry/[name]-[hash].js`
             }
             return 'common/static/entry/[name]-[hash].js'
-          }, 
+          },
           // 静态资源整理
-          assetFileNames: (chunkInfo)=>{
-            if(chunkInfo.name&&chunkInfo.name.includes('apps')){
-              const module_name=chunkInfo.name.match(/apps\/(.+?)\//)[1]
+          assetFileNames: (chunkInfo) => {
+            if (chunkInfo.name && chunkInfo.name.includes('apps')) {
+              const module_name = chunkInfo.name.match(/apps\/(.+?)\//)[1]
               return `apps/${module_name}/static/[ext]/[name]-[hash].[ext]`
             }
             return 'common/static/[ext]/[name]-[hash].[ext]'
           }
         }
-      },
+      }
 
     },
     /* 服务器配置 */

@@ -4,7 +4,7 @@
       <p class="title">App2</p>
     </div>
 
-    <div class="button" @click="JumpTo">跳转到外部应用App1</div>
+    <van-button type="primary" plain @click="JumpTo" block>跳转到外部应用App1</van-button>
   </div>
 </template>
 
@@ -33,18 +33,9 @@ const JumpTo = () => {
   }
 }
 
-.button {
-  border-radius: 3px;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: blue;
-  color: #FFF;
-  font-size: 12px;
-
-  &:hover {
-    cursor: pointer;
-  }
+.van-button {
+  margin: 0 auto;
+  width: 300px;
+  margin-top: 20px;
 }
 </style>

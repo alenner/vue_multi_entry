@@ -4,10 +4,9 @@
       <p class="title">app1_index</p>
     </div>
 
-    <div class="button" @click="JumpTo">跳转到外部应用App2</div>
-    <div class="button" @click="Login">登录</div>
+    <van-button type="primary" plain @click="JumpTo" block>跳转到外部应用App2</van-button>
+    <van-button type="primary" @click="Login" block>登录</van-button>
   </div>
-  
 </template>
 
 <script setup lang="ts">
@@ -39,19 +38,9 @@ const Login = () => {
   }
 }
 
-.button {
+.van-button {
+  margin: 0 auto;
+  width: 300px;
   margin-top: 20px;
-  border-radius: 3px;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: $color-primary;
-  color: $color-text-regular;
-  font-size: 12px;
-
-  &:hover {
-    cursor: pointer;
-  }
 }
 </style>

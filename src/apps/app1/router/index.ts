@@ -3,7 +3,7 @@ import { ModuleRoutes } from '../config'
 
 const router = createRouter({
   history: createWebHistory(),
-  routes: ModuleRoutes
+  routes: ModuleRoutes,
 })
 
 export default router

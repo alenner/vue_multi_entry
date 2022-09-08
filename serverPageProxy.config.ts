@@ -24,19 +24,19 @@ const apps:Array<Apps> = Object.values(Apps)
 const serverProxy = (keys: Array<Apps>):AppsConfig | null => {
   const config:AppsConfig = {}
   keys.forEach(key => {
-    Object.assign(config,{
+    Object.assign(config, {
       [`/${key}`]: {
         target: 'http://localhost',
         // 解决单页面html文件路径不为'/index.html'时，启用history路由刷新页面404问题
         bypass: (req, res, options) => {
           if (req.headers.accept.indexOf('html') !== -1) {
-            return `/apps/${key}/index.html`;
+            return `/apps/${key}/index.html`
           }
         }
       }
     })
   })
-  
+
   return config
 }
 

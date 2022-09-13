@@ -38,7 +38,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
       },
       preprocessorOptions: {
         scss: {
-          additionalData: '@import \'@/base/styles/global.scss\';' // 项目全局共享scss变量和mixin混入
+          additionalData: "@import '@/base/styles/global.scss';" // 项目全局共享scss变量和mixin混入
         }
       }
     },
@@ -56,7 +56,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
           app2: resolve(__dirname, 'apps/app2/index.html')
         },
         output: {
-          manualChunks (id) {
+          manualChunks(id) {
             if (id.includes('node_modules')) {
               const arr = id.toString().split('node_modules/')[1].split('/')
               switch (arr[0]) {
@@ -83,7 +83,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
           },
           /* 打包文件整理 */
           // 代码块整理
-          chunkFileNames: (chunkInfo) => {
+          chunkFileNames: chunkInfo => {
             if (chunkInfo.facadeModuleId && chunkInfo.facadeModuleId.includes('src')) {
               const module_name = chunkInfo.facadeModuleId.match(/src\/apps\/(.+?)\//)[1]
               return `apps/${module_name}/static/js/[name]-[hash].js`
@@ -91,7 +91,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
             return 'common/static/js/[name]-[hash].js'
           },
           // 入口文件整理
-          entryFileNames: (chunkInfo) => {
+          entryFileNames: chunkInfo => {
             if (chunkInfo.facadeModuleId) {
               const module_name = chunkInfo.facadeModuleId.match(/\/apps\/(.+?)\//)[1]
               return `apps/${module_name}/static/entry/[name]-[hash].js`
@@ -99,7 +99,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
             return 'common/static/entry/[name]-[hash].js'
           },
           // 静态资源整理
-          assetFileNames: (chunkInfo) => {
+          assetFileNames: chunkInfo => {
             if (chunkInfo.name && chunkInfo.name.includes('apps')) {
               const module_name = chunkInfo.name.match(/apps\/(.+?)\//)[1]
               return `apps/${module_name}/static/[ext]/[name]-[hash].[ext]`
@@ -108,7 +108,6 @@ export default defineConfig(({ mode }: ConfigEnv) => {
           }
         }
       }
-
     },
     /* 服务器配置 */
     server: {
@@ -118,7 +117,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
           target: 'http://localhost:8080', // 目标域名地址
           ws: true, // 开启websocket代理
           changeOrigin: true, // 开启跨域访问
-          rewrite: (path) => path.replace('^/api', '/') // 请求路径重写
+          rewrite: path => path.replace('^/api', '/') // 请求路径重写
         },
         // 多应用代理设置
         ...serverPageProxy

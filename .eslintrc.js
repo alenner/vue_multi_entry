@@ -1,21 +1,17 @@
 module.exports = {
   root: true,
   env: {
-    browser: true,
+    browser: true
   },
   parser: 'vue-eslint-parser',
   parserOptions: {
     parser: '@typescript-eslint/parser',
     ecmaFeatures: {
-      // 非 react 项目关闭 jsx 语法校验,默认为 true 
-      jsx: false,
-    },
+      // 非 react 项目关闭 jsx 语法校验,默认为 true
+      jsx: false
+    }
   },
-  extends: [
-    'plugin:vue/vue3-essential',
-    '@vue/standard',
-    'plugin:@typescript-eslint/recommended',
-  ],
+  extends: ['plugin:vue/vue3-essential', '@vue/standard', 'plugin:@typescript-eslint/recommended'],
   rules: {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
@@ -23,8 +19,8 @@ module.exports = {
     'no-tabs': 'off',
     'array-element-newline': ['error', 'consistent'],
     indent: ['error', 2, { MemberExpression: 0, SwitchCase: 1, ignoredNodes: ['TemplateLiteral'] }],
-    quotes: ['error', 'single'],
-    'comma-dangle': ['error', 'always-multiline'],
+    quotes: ['error', 'single', { avoidEscape: true }],
+    'comma-dangle': 'off',
     'object-curly-spacing': ['error', 'always'],
     'max-len': ['error', 120],
     'no-new': 'off',
@@ -58,6 +54,8 @@ module.exports = {
     'import/order': 'off',
     'no-trailing-spaces': 'off',
     'func-names': 'off',
+    'no-fallthrough': ['error', { allowEmptyCase: true }],
+    camelcase: 'off',
     radix: 'off',
     'no-unused-expressions': 'off',
     'no-underscore-dangle': 'off',
@@ -69,6 +67,7 @@ module.exports = {
     'import/no-unresolved': 'off',
     'no-case-declarations': 'off',
     'template-curly-spacing': 'off',
+    'space-before-function-paren': 'off',
     'vue/valid-v-for': 'off',
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/no-empty-function': 'off',
@@ -80,6 +79,6 @@ module.exports = {
     'no-return-await': 'off',
     'vue/html-indent': ['error', 2],
     'vue/html-self-closing': 'off',
-    'vue/singleline-html-element-content-newline': 'off',
-  },
+    'vue/singleline-html-element-content-newline': 'off'
+  }
 }

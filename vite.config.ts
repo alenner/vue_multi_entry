@@ -4,6 +4,14 @@ import vue from '@vitejs/plugin-vue'
 /* 引用postcss-px-to-viewport */
 import postCssPxToViewport from 'postcss-px-to-viewport'
 import PxToViewportConfig from './postcssrc.js'
+
+/* 引用unplugin-auto-import插件 */
+import AutoImport from 'unplugin-auto-import/vite'
+
+/* 引用unplugin-vue-components插件 */
+import Components from 'unplugin-vue-components/vite'
+/* 引用VantUI解析器 */
+import { VantResolver } from 'unplugin-vue-components/resolvers'
 /* 服务环境配置 */
 import serverPageProxy from './serverPageProxy.config'
 // https://vitejs.dev/config/
@@ -16,7 +24,27 @@ export default defineConfig(({ mode }: ConfigEnv) => {
   const openUrl = argvIndex > -1 ? process.argv[argvIndex + 1] : '/app1'
   return {
     /* 插件激活 */
-    plugins: [vue()],
+    plugins: [
+      vue(),
+      /* 激活autoImport插件 */
+      AutoImport({
+        /**
+         * 配置要自动引用的插件
+         * 自动导入 Vue 组合式API，如：ref, reactive, toRef 等
+         * 自动导入 vue-router 组合式API，如：useRouter，useRoute等
+         */
+        imports: ['vue', 'vue-router'],
+        dts: 'src/auto-import.d.ts', // 使用TypeScript的话，需要生成src路径下名为 auto-import.d.ts的是声明文件
+        /* 解决eslint报错问题 */
+        eslintrc: {
+          enabled: true
+        }
+      }),
+      /* 激活Components插件 */
+      Components({
+        resolvers: [VantResolver()] // 解析vantUI组件并实现自动按需引入
+      })
+    ],
     /* 路径重写 */
     resolve: {
       alias: {

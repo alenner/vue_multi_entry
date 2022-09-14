@@ -11,7 +11,7 @@ module.exports = {
       jsx: false
     }
   },
-  extends: ['plugin:vue/vue3-essential', '@vue/standard', 'plugin:@typescript-eslint/recommended'],
+  extends: ['plugin:vue/vue3-essential', '@vue/standard', 'plugin:@typescript-eslint/recommended', './.eslintc-auto-import.json'],
   rules: {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
@@ -22,7 +22,7 @@ module.exports = {
     quotes: ['error', 'single', { avoidEscape: true }],
     'comma-dangle': 'off',
     'object-curly-spacing': ['error', 'always'],
-    'max-len': ['error', 120],
+    'max-len': ['error', 200],
     'no-new': 'off',
     'linebreak-style': 'off',
     'import/extensions': 'off',

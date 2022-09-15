@@ -17,12 +17,29 @@
 </template>
 
 <script setup lang="ts">
+import { ComponentInternalInstance } from 'vue'
+import { randomString } from '@/base/utils/tool'
+import { userStore } from '../../../store/index'
+
+const router = useRouter()
+/**
+ * 如果不加上断言会报proxy属性不存在，因为getCurrentInstance() 可能为 null
+ * 这里的proxy可以看做是vue2中的vue实例的this
+ */
+const { proxy } = getCurrentInstance() as ComponentInternalInstance
+
 const userLogin = reactive({
   username: '',
   password: ''
 })
-const formSubmit = (val: any) => {
-  console.log(val, 'formSubmit')
+
+const user = userStore()
+const formSubmit = () => {
+  proxy?.$toast.success('登录成功')
+  // router.go(-1)
+  router.push({ name: 'App1' })
+  const token = randomString()
+  user.setToken(token)
 }
 </script>
 

@@ -13,7 +13,7 @@
     "@typescript-eslint/eslint-plugin": "^5.36.2",
     "@typescript-eslint/parser": "^5.36.2",
     "axios": "^0.27.2",
-    "pinia": "^2.0.17",
+    "pinia": "^2.0.22",
     "sass": "^1.54.0",
     "vant": "^3.6.2",
     "vue": "^3.2.37",

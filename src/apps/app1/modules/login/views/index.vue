@@ -39,7 +39,7 @@ const formSubmit = () => {
   // router.go(-1)
   router.push({ name: 'App1' })
   const token = randomString()
-  user.setToken(token)
+  user.token = token
 }
 </script>
 

@@ -22,7 +22,7 @@ const JumpTo = () => {
 const Login = () => {
   if (user.token) {
     proxy?.$toast.success('已退出登录')
-    user.clearToken()
+    user.token = ''
   } else {
     router.push({ name: 'Login' })
   }

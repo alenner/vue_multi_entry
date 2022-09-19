@@ -33,7 +33,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
          * 自动导入 Vue 组合式API，如：ref, reactive, toRef 等
          * 自动导入 vue-router 组合式API，如：useRouter，useRoute等
          */
-        imports: ['vue', 'vue-router'],
+        imports: ['vue', 'vue-router', 'pinia'],
         dts: 'src/auto-import.d.ts', // 使用TypeScript的话，需要生成src路径下名为 auto-import.d.ts的是声明文件
         /* 解决eslint报错问题 */
         eslintrc: {

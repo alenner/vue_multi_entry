@@ -1,6 +1,10 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import { createPinia } from 'pinia'
+
+// 引用pinia 数据状态持久化存储插件
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+
 // 引用vant组件库
 // import vant from 'vant'
 
@@ -16,6 +20,9 @@ import 'vant/es/toast/style'
 import '@/base/styles/reset.scss'
 
 import router from './router'
+const pinia = createPinia()
+
+pinia.use(piniaPluginPersistedstate) // 在pinia中注册数据持久化插件
 
 const app = createApp(App)
 
@@ -23,7 +30,7 @@ const app = createApp(App)
 app.use(router)
 
 /* pinia注册 */
-app.use(createPinia())
+app.use(pinia)
 
 /* vant toast组件挂载 */
 app.config.globalProperties.$toast = Toast
